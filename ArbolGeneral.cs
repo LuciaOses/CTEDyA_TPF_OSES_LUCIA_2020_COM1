@@ -39,8 +39,39 @@ namespace DeepSpace
 	
 		
 		public int nivel(T dato) {
-			return 0;
+			Cola<ArbolGeneral<T>> c = new Cola<ArbolGeneral<T>>();
+			ArbolGeneral<T> arbolaux;
+			int nivel =0; //lleva la cuenta de nivel
+			c.encolar(this);
+			c.encolar(null);
+			
+			while(!c.esVacia())
+			{
+				arbolaux=c.desencolar();
+				
+				//si es separador
+				if( arbolaux == null){
+				
+					if(c.esVacia())
+						c.encolar(null);
+						nivel ++;
+				
+				
+				}
+				//si es un nodo (arbol)
+				else{
+					//encolamos hijos
+					foreach(var hijo in arbolaux.getHijos())
+						c.encolar(hijo);
+					
+				}	
+			}
+			return nivel;
+			
 		}
-	
+		
 	}
+	
 }
+	
+	
