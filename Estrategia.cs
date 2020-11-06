@@ -30,23 +30,25 @@ namespace DeepSpace
 					
 				}
 				// Si desencolo un nodo
-				else
+				else{
 					// Si es planeta de la inteligencia artificial
-					if (arbolaux.getDatoRaiz().EsPlanetaDeLaIA())
-						Consulta += "Distancia desde la Raiz al planeta de IA es:" + Nivel;
+					if (arbolaux.getDatoRaiz().EsPlanetaDeLaIA()){
+						Consulta = "Distancia desde la Raiz al planeta de IA es:" + Nivel;
+						return Consulta;
+				}
 						
 					// No es planeta de la IA 		
 					else
-						if(!arbol.esHoja()) 	//No es una hoja 
-							foreach( var hijo in arbol.getHijos()) 
+						foreach( var hijo in arbolaux.getHijos()) //<----El for es sobre arbolaux y no arbol, por eso quedaba en loop infinito.
 								c.encolar(hijo);
 					
 					
 					
 					
 				}
-			return Consulta;
 			}
+			return Consulta;
+		}
 		
 
 		public String Consulta2( ArbolGeneral<Planeta> arbol)
