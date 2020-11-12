@@ -98,7 +98,7 @@ namespace DeepSpace
 			int Nivel= 0;     //cuenta los niveles
 			int Planeta= 0; //cuenta los planetas
 			int Poblacion= 0; //cuenta la poblacion por planeta
-			string Consu= "";
+			string Consu= "\n\n\n"; //Agrego espacios iniciales asi no se superponene los strings.
 	
 			c.encolar(arbol); //raiz a la cola
 			c.encolar(null); //separador a la cola
