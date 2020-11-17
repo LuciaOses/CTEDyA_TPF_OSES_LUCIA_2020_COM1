@@ -99,7 +99,6 @@ namespace DeepSpace
 			int Planeta= 0; //cuenta los planetas
 			int Poblacion= 0; //cuenta la poblacion por planeta
 			string Consu= "\n\n\n"; //Agrego espacios iniciales asi no se superponene los strings.
-	
 			c.encolar(arbol); //raiz a la cola
 			c.encolar(null); //separador a la cola
 			
@@ -135,10 +134,68 @@ namespace DeepSpace
 		
 		public Movimiento CalcularMovimiento(ArbolGeneral<Planeta> arbol)
 		{
-			//Implementar
+			// Raiz pertenece a la IA
+			//if (arbol.getDatoRaiz().EsPlanetaDeLaIA()){
+			//conquista hacia el jugador
+			
+			// si la raiz no es planeta de la IA 
+			//Conquista hacia la raiz
 			
 			return null;
 		}
+		
+		public List<Planeta> CaminoIA(ArbolGeneral<Planeta> arbol , List<Planeta> camino)
+		{
+			//Primero Raiz
+			camino.Add(arbol.getDatoRaiz()); //agrega al final de la lista este planeta
+			
+			// Si es planeta de la inteligencia artificial
+			if (arbol.getDatoRaiz().EsPlanetaDeLaIA()){
+				return camino;
+			}
+			else 
+			{
+				//Luego hijos recursivamente
+				foreach (var hijo in arbol.getHijos())
+				{
+					List<Planeta> caminoAux = CaminoIA (hijo, camino); //Variable local del foreach
+					if( caminoAux != null)
+						return caminoAux;
+				}
+					
+				//Saco ultimo Planeta de Camino
+				camino.RemoveAt(camino.Count -1);
+				
+			}
+			return null;
+		}
+		
+		public List<Planeta> CaminoJugador(ArbolGeneral<Planeta> arbol , List<Planeta> camino)
+		{
+			//Primero Raiz
+			camino.Add(arbol.getDatoRaiz()); //agrega al final de la lista este planeta
+			
+			// Si es planeta de la inteligencia artificial
+			if (arbol.getDatoRaiz().EsPlanetaDelJugador()){
+				return camino;
+			}
+			else 
+			{
+				//Luego hijos recursivamente
+				foreach (var hijo in arbol.getHijos())
+				{
+					List<Planeta> caminoAux = CaminoJugador (hijo, camino);
+					if( caminoAux != null)
+						return caminoAux;
+				}
+					
+				//Saco ultimo Planeta de Camino
+				camino.RemoveAt(camino.Count -1);
+				
+			}
+			return null;
+		}
+		
 	}
 }
 
