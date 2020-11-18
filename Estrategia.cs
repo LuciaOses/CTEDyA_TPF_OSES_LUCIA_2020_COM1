@@ -126,7 +126,7 @@ namespace DeepSpace
 						foreach( var hijo in arbolaux.getHijos())
 							c.encolar(hijo);
 
-			}
+					}
 					
 		}
 			return Consu;
@@ -134,20 +134,34 @@ namespace DeepSpace
 		
 		public Movimiento CalcularMovimiento(ArbolGeneral<Planeta> arbol)
 		{
-			// Raiz pertenece a la IA
-			//if (arbol.getDatoRaiz().EsPlanetaDeLaIA()){
-			//conquista hacia el jugador
+			/*Movimiento mov = new Movimiento (o , d);
 			
-			// si la raiz no es planeta de la IA 
-			//Conquista hacia la raiz
+			// Es planeta de la IA conquisto hacia planeta jugador
+ 			if (arbol.getDatoRaiz().EsPlanetaDeLaIA()){
+				for ( int i , i < CaminoJugador  , i++){
+					mov.origen = CaminoJugador[i];
+					mov.destino = CaminoJugador[i++]
+				}
+			// No es planeta IA conquisto desde el Planeta IA hacia la Raiz
+			else
+				for( int i, i < CaminoIA , i++)
+			{
+				if( CaminoIA[i] == arbol.getDatoRaiz().EsPlanetaDeLaIA())
+				{
+					mov.origen = CaminoIA[i];
+					mov.destino= CaminoIA[i -1 ];
+				}
+			}
+				
+				}*/
 			
 			return null;
 		}
 		
-		public List<Planeta> CaminoIA(ArbolGeneral<Planeta> arbol , List<Planeta> camino)
+		private List<Planeta> _CaminoIA(ArbolGeneral<Planeta> arbol , List<Planeta> camino)
 		{
 			//Primero Raiz
-			camino.Add(arbol.getDatoRaiz()); //agrega al final de la lista este planeta
+			camino.Add(arbol.getDatoRaiz());
 			
 			// Si es planeta de la inteligencia artificial
 			if (arbol.getDatoRaiz().EsPlanetaDeLaIA()){
@@ -158,7 +172,7 @@ namespace DeepSpace
 				//Luego hijos recursivamente
 				foreach (var hijo in arbol.getHijos())
 				{
-					List<Planeta> caminoAux = CaminoIA (hijo, camino); //Variable local del foreach
+					List<Planeta> caminoAux = _CaminoIA (hijo, camino); //Variable local del foreach
 					if( caminoAux != null)
 						return caminoAux;
 				}
@@ -170,10 +184,10 @@ namespace DeepSpace
 			return null;
 		}
 		
-		public List<Planeta> CaminoJugador(ArbolGeneral<Planeta> arbol , List<Planeta> camino)
+		private List<Planeta> _CaminoJugador(ArbolGeneral<Planeta> arbol , List<Planeta> camino)
 		{
 			//Primero Raiz
-			camino.Add(arbol.getDatoRaiz()); //agrega al final de la lista este planeta
+			camino.Add(arbol.getDatoRaiz()); 
 			
 			// Si es planeta de la inteligencia artificial
 			if (arbol.getDatoRaiz().EsPlanetaDelJugador()){
@@ -184,7 +198,7 @@ namespace DeepSpace
 				//Luego hijos recursivamente
 				foreach (var hijo in arbol.getHijos())
 				{
-					List<Planeta> caminoAux = CaminoJugador (hijo, camino);
+					List<Planeta> caminoAux = _CaminoJugador (hijo, camino);
 					if( caminoAux != null)
 						return caminoAux;
 				}
@@ -196,6 +210,17 @@ namespace DeepSpace
 			return null;
 		}
 		
+		//Interfaz con el usuario retorno el camino.
+		public List<Planeta> CaminoIA(ArbolGeneral<Planeta> arbol)
+		{
+			List<Planeta> camino = new List<Planeta>();
+			return _CaminoIA(arbol, camino);
+		}
+		public List<Planeta> CaminoJugador(ArbolGeneral<Planeta> arbol)
+		{
+			List<Planeta> camino = new List<Planeta>();
+			return _CaminoJugador(arbol, camino);
+		}
+		
 	}
 }
-
