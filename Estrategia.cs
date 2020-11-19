@@ -132,8 +132,55 @@ namespace DeepSpace
 			return Consu;
 		}
 		
-		public Movimiento CalcularMovimiento(ArbolGeneral<Planeta> arbol)
+			
+		
+		private void getEnemigo(ArbolGeneral<Planeta> arbol, List<Planeta> result, List<Planeta> best)
 		{
+			result.Add(arbol.getDatoRaiz());
+			if (!arbol.getDatoRaiz().EsPlanetaDelJugador() && !arbol.esHoja()) {
+				foreach (var hijo in arbol.getHijos()) { //Busco un camino
+					this.getEnemigo(hijo, result, best);
+				}
+			} else {
+				if (arbol.getDatoRaiz().EsPlanetaDelJugador()) {
+					if (best.Count == 0 || result.Count < best.Count || best[best.Count - 1].EsPlanetaNeutral()) { //Encontre un mejor camino
+						best.Clear();
+						best.AddRange(result);
+					}
+				} else if (best.Count == 0) { //No hay mejor camino calculado, es la inicializacion del mejor camino es el primero encontrado
+					best.AddRange(result);
+				}
+			}
+			result.RemoveAt(result.Count - 1);
+		}
+		
+		private Movimiento getEnemigoCercano(ArbolGeneral<Planeta> arbol)
+		{
+			List<Planeta> result = new List<Planeta>();
+			List<Planeta> best = new List<Planeta>();
+			this.getEnemigo(arbol, result, best);
+			for (int i = best.Count - 2; i > 0; i--) {
+				if (best[i].EsPlanetaDeLaIA()) {
+					return new Movimiento(best[i], best[i + 1]); //Retorno el movimiento en el camino al planeta enemigo  mas cercano 
+				}
+			}
+			return new Movimiento(best[0], best[1]);
+			
+		}
+			
+			
+	    public Movimiento CalcularMovimiento(ArbolGeneral<Planeta> arbol)
+		{
+			Movimiento mov = null;
+			
+			// Es planeta de la IA conquisto hacia planeta jugador
+ 			if (arbol.getDatoRaiz().EsPlanetaDeLaIA()){
+		          mov = this.getEnemigoCercano(arbol);
+				
+				} 
+			
+			return mov;
+		
 			/*Movimiento mov = new Movimiento (o , d);
 			
 			// Es planeta de la IA conquisto hacia planeta jugador
@@ -153,9 +200,9 @@ namespace DeepSpace
 				}
 			}
 				
-				}*/
+				}
 			
-			return null;
+			return null;*/
 		}
 		
 		private List<Planeta> _CaminoIA(ArbolGeneral<Planeta> arbol , List<Planeta> camino)
