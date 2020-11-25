@@ -21,10 +21,14 @@ namespace DeepSpace
             };
             game.scene.arbolDePlanetas = LevelLoader.arbolDePlanetas;
             this.objects = new List<GameObject>() {menuButton, 
-            	new Text(game, new Vector2(300.0f, 10.0f), "Consultas!", 30.0f),
-            	new Text(game, new Vector2(20.0f, 70.0f), (new Estrategia()).Consulta1(game.scene.arbolDePlanetas)), 
-            	new Text(game, new Vector2(20.0f, 100.0f), (new Estrategia()).Consulta2(game.scene.arbolDePlanetas)), 
-            	new Text(game, new Vector2(20.0f, 130.0f), (new Estrategia()).Consulta3(game.scene.arbolDePlanetas)), 
+            	new Text(game, new Vector2(300.0f, 10.0f), "¡Consultas!", 30.0f),
+            	new Text(game, new Vector2(20.0f, 60.0f), "¡Acá esta tu enemigo!", 30.0f),
+            	new Text(game, new Vector2(20.0f, 100.0f), (new Estrategia()).Consulta1(game.scene.arbolDePlanetas)), 
+            	new Text(game, new Vector2(20.0f, 150.0f), "¡Crea una buena Estrategia!", 30.0f),
+            	new Text(game, new Vector2(20.0f, 190.0f), (new Estrategia()).Consulta2(game.scene.arbolDePlanetas)),
+            	new Text(game, new Vector2(20.0f, 220.0f), (new Estrategia()).Consulta3(game.scene.arbolDePlanetas)), 
+            	new Text(game, new Vector2(20.0f, 390.0f), "¡Acá estas vos!", 30.0f),
+            	new Text(game, new Vector2(20.0f, 430.0f), (new Estrategia()).Consulta4(game.scene.arbolDePlanetas)),
             	new Text(game, new Vector2(600.0f, 440.0f), "Menu")};
         }
 
